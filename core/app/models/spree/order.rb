@@ -47,7 +47,8 @@ module Spree
 
     belongs_to :store, class_name: 'Spree::Store'
     has_many :state_changes, as: :stateful
-    has_many :line_items, -> { order(:created_at, :id) }, dependent: :destroy, inverse_of: :order
+    has_many :line_items, -> { where(hidden: false).order(:created_at, :id) }, dependent: :destroy, inverse_of: :order
+    has_many :all_line_items, -> { order(:created_at, :id) }, dependent: :destroy, inverse_of: :order, class_name: 'Spree::LineItem'
     has_many :payments, dependent: :destroy, inverse_of: :order
     has_many :return_authorizations, dependent: :destroy, inverse_of: :order
     has_many :reimbursements, inverse_of: :order
